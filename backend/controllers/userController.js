@@ -41,3 +41,17 @@ exports.recoverPassword = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+exports.getUserProfile = async (req, res) => {
+  try {
+    const userId = req.params.userId; // Obtendo o userId da URL dinâmica
+    const user = await User.findById(userId); // Buscando o usuário pelo ID
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user); // Retornando o perfil do usuário encontrado
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};

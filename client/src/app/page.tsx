@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import axios from "axios";
 
 const Home: React.FC = () => {
@@ -14,9 +14,15 @@ const Home: React.FC = () => {
         "http://localhost:5000/api/login", // Altere a URL conforme necessário
         formData
       );
-      const { token } = response.data;
-      localStorage.setItem("token", token);
-      router.push("/dashboard"); // Redireciona para a página do Dashboard
+
+      const { token, userId } = response.data;
+      if (userId) {
+        localStorage.setItem("token", token);
+        // Redireciona para a página do Dashboard com o userId interpolado na URL
+        router.push(`/dashboard/${userId}`);
+      } else {
+        setError("Erro ao fazer login. UserId não foi recebido.");
+      }
     } catch (error) {
       setError("Erro ao fazer login. Verifique suas credenciais.");
       console.error("Error logging in:", error);

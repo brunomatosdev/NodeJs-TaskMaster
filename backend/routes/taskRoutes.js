@@ -8,6 +8,9 @@ const verifyToken = require("../utils/authUtils"); // Importa a função de midd
 // Rota para obter todas as tarefas
 router.get("/", verifyToken, taskController.getAllTasks); // Adiciona o middleware diretamente à rota
 
+// Rota para obter todas as tarefas de um usuário específico
+router.get("/user/:userId", verifyToken, taskController.getUserTasks); // Adiciona o middleware diretamente à rota
+
 // Rota para criar uma nova tarefa
 router.post("/", verifyToken, taskController.createTask); // Adiciona o middleware diretamente à rota
 

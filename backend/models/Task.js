@@ -6,7 +6,16 @@ const taskSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     description: { type: String },
-    assignedTo: { type: String, required: true },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    }, // Referência ao modelo User para o autor da tarefa (userID)
+    assignedTo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    }, // Referência ao modelo User para quem a tarefa é atribuída (userID)
     deadline: { type: Date, required: true },
   },
   { timestamps: true }
