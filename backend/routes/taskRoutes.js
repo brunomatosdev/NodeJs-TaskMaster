@@ -3,6 +3,10 @@
 const express = require("express");
 const router = express.Router();
 const taskController = require("../controllers/taskController");
+const { verifyToken } = require("../utils/authUtils");
+
+// Middleware para verificar a validade do token JWT em todas as rotas
+router.use(verifyToken);
 
 // Rota para obter todas as tarefas
 router.get("/", taskController.getAllTasks);

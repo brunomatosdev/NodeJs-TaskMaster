@@ -1,6 +1,8 @@
 // backend/config.js
 
+require("dotenv").config();
+
 module.exports = {
-  mongoURI: process.env.MONGO_URI || "mongodb://localhost:27017/taskmaster",
-  jwtSecret: process.env.JWT_SECRET || "yourjwtsecretkey",
+  mongoURI: process.env.MONGO_URI,
+  jwtSecret: process.env.JWT_SECRET,
 };
