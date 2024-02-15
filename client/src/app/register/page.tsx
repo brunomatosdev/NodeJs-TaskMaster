@@ -1,45 +1,47 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
-const Home: React.FC = () => {
+const Register: React.FC = () => {
   const router = useRouter();
   const [error, setError] = useState("");
 
-  const handleLogin = async (formData: { email: string; password: string }) => {
+  const handleRegister = async (formData: {
+    username: string;
+    email: string;
+    password: string;
+  }) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/login", // Altere a URL conforme necessário
+        "http://localhost:5000/api/register", // Altere a URL conforme necessário
         formData
       );
       const { token } = response.data;
       localStorage.setItem("token", token);
-      router.push("/dashboard"); // Redireciona para a página do Dashboard
+      router.push("/dashboard"); // Redireciona para a página do Dashboard após o registro
     } catch (error) {
-      setError("Erro ao fazer login. Verifique suas credenciais.");
-      console.error("Error logging in:", error);
+      setError("Erro ao fazer registro. Verifique suas informações.");
+      console.error("Error registering:", error);
     }
-  };
-
-  const handleSignup = () => {
-    router.push("/register"); // Redireciona para a página de registro
   };
 
   return (
     <div>
-      <h1>Task Master</h1>
+      <h1>Registro</h1>
       <form
         onSubmit={async (e) => {
           e.preventDefault();
           const formData = {
+            username: e.target.username.value,
             email: e.target.email.value,
             password: e.target.password.value,
           };
-          await handleLogin(formData);
+          await handleRegister(formData);
         }}
       >
+        <input type="text" name="username" placeholder="Username" required />
         <input type="email" name="email" placeholder="Email" required />
         <input
           type="password"
@@ -47,15 +49,11 @@ const Home: React.FC = () => {
           placeholder="Password"
           required
         />
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
       </form>
-      <p>
-        Não possui uma conta?{" "}
-        <button onClick={handleSignup}>Registre-se aqui</button>
-      </p>
       {error && <p>{error}</p>}
     </div>
   );
 };
 
-export default Home;
+export default Register;

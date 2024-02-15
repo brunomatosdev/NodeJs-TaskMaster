@@ -5,8 +5,9 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const config = require("./config");
-const authRoutes = require("./routes/authRoutes");
+const loginRoutes = require("./routes/loginRoutes");
 const taskRoutes = require("./routes/taskRoutes");
+const registerRoutes = require("./routes/registerRoutes"); // Importe as rotas de registro
 require("dotenv").config();
 
 // Initialize Express app
@@ -23,8 +24,9 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 // Routes
-app.use("/api/auth", authRoutes);
+app.use("/api/login", loginRoutes);
 app.use("/api/tasks", taskRoutes);
+app.use("/api/register", registerRoutes); // Use as rotas de registro
 
 // Start server
 const PORT = process.env.PORT || 5000;
